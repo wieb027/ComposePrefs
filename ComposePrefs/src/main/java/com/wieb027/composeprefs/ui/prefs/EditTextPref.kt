@@ -75,14 +75,14 @@ fun EditTextPref(
 
     // Set value initially if it exists in datastore
     LaunchedEffect(Unit) {
-        prefs?.get(selectionKey)?.also {
+        prefs?.get(selectionKey)?.let {
             value = it
         }
     }
 
     LaunchedEffect(datastore.data) {
         datastore.data.collectLatest { pref ->
-            pref[selectionKey]?.also {
+            pref[selectionKey]?.let {
                 value = it
             }
         }
