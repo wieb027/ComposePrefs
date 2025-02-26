@@ -2,7 +2,11 @@ package com.wieb027.composeprefs.ui.prefs
 
 import android.util.Log
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -10,8 +14,8 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.compose.ui.window.DialogProperties
@@ -143,26 +147,25 @@ fun EditTextPref(
                     )
 
                     Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.End,
-                        modifier = Modifier.width(with(LocalDensity.current) { dialogSize.width.toDp() })
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.fillMaxWidth(),
                     ) {
-                        TextButton(
-                            modifier = Modifier.padding(end = 16.dp),
-                            onClick = { showDialog = false }
-                        ) {
-                            Text("Cancel", style = MaterialTheme.typography.body1)
-                        }
+                        DialogIconButton(
+                            modifier = Modifier.padding(start = 16.dp, bottom = 16.dp, end = 16.dp),
+                            onClick = { showDialog = false },
+                            icon = Icons.Rounded.Close,
+                            description = "Close",
+                        )
 
-                        TextButton(
-                            modifier = Modifier.padding(end = 16.dp),
+                        DialogIconButton(
+                            modifier = Modifier.padding(start = 16.dp, bottom = 16.dp, end = 16.dp),
                             onClick = {
                                 edit()
                                 showDialog = false
-                            }
-                        ) {
-                            Text("Save", style = MaterialTheme.typography.body1)
-                        }
+                            },
+                            icon = Icons.Rounded.Check,
+                            description = "Save",
+                        )
                     }
 
                 }
@@ -191,5 +194,27 @@ fun DialogHeader(dialogTitle: String?, dialogMessage: String?) {
                 style = MaterialTheme.typography.subtitle1
             )
         }?.invoke()
+    }
+}
+
+@Composable
+fun DialogIconButton(
+    onClick: () -> Unit,
+    icon: ImageVector,
+    description: String?,
+    modifier: Modifier,
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier,
+        colors =
+        ButtonDefaults.buttonColors(
+            disabledBackgroundColor = Color(186, 186, 186),
+            backgroundColor = Color(0xFF002749),
+            contentColor = Color.White, // Text and icon color
+        ),
+        contentPadding = PaddingValues(vertical = 15.dp),
+    ) {
+        Icon(icon, description)
     }
 }
