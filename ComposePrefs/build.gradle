@@ -36,6 +36,8 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion "1.3.0"
     }
+
+    namespace "com.wieb027.composeprefs"
 }
 
 dependencies {
@@ -51,7 +53,7 @@ afterEvaluate {
             release(MavenPublication) {
                 from components.release
 
-                groupId = 'com.github.jamalmulla'
+                groupId = 'com.github.wieb027'
                 artifactId = 'ComposePrefs'
                 version = '1.0.6'
             }
