@@ -9,7 +9,6 @@ import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
@@ -32,7 +31,7 @@ import kotlinx.coroutines.launch
  * @param key Key used to identify this Pref in the DataStore
  * @param title Main text which describes the Pref
  * @param modifier Modifier applied to the Text aspect of this Pref
- * @param summary Used to give some more information about what this Pref is for
+ * @param summary Used to give some more information about what this Pref is for (in this pref not used)
  * @param dialogTitle Title shown in the dialog. No title if null.
  * @param dialogMessage Summary shown underneath [dialogTitle]. No summary if null.
  * @param defaultValue Default value that will be set in the TextField when the dialog is shown for the first time.
@@ -108,7 +107,7 @@ fun EditTextPref(
     TextPref(
         title = title,
         modifier = modifier,
-        summary = summary,
+        summary = value, // summary is not used in this Pref
         textColor = textColor,
         enabled = enabled,
         onClick = { if (enabled) showDialog = !showDialog },
