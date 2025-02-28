@@ -8,6 +8,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 
 /**
@@ -25,9 +26,12 @@ interface PrefsScope {
      * Adds a group of Prefs with a title.
      *
      * @param title Group header text. Will be shown above the list of Prefs
+     * @param headerFontSize Font size of the header Text
+     * @param modifier Modifier for the header
+     * @param contentAlignment Alignment of the text
      * @param items All the prefs in this group
      */
-    fun prefsGroup(title: String, items: PrefsScope.() -> Unit)
+    fun prefsGroup(title: String, headerFontSize: TextUnit = TextUnit.Unspecified, modifier: Modifier = Modifier.fillMaxWidth().padding(start = 16.dp), contentAlignment: Alignment = Alignment.TopCenter, items: PrefsScope.() -> Unit)
 
     /**
      * Adds a group of Prefs. This overload is intended for passing in a [GroupHeader] if you want more control over the header.
@@ -57,7 +61,7 @@ internal class PrefsScopeImpl : PrefsScope {
         )
     }
 
-    override fun prefsGroup(title: String, items: PrefsScope.() -> Unit) {
+    override fun prefsGroup(title: String, headerFontSize: TextUnit, modifier: Modifier, contentAlignment: Alignment, items: PrefsScope.() -> Unit) {
         // Exceptions to when divider should be drawn
         // - if last item
         // - if next item starts a new group
@@ -70,9 +74,9 @@ internal class PrefsScopeImpl : PrefsScope {
         this.prefsItem {
             GroupHeader(
                 title = title,
-                fontSize = MaterialTheme.typography.subtitle2.fontSize,
-                modifier = Modifier.fillMaxWidth().padding(start = 16.dp),
-                contentAlignment = Alignment.TopCenter
+                fontSize = headerFontSize,
+                modifier = modifier,
+                contentAlignment = contentAlignment
             )
         }
 
