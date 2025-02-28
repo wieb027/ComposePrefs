@@ -1,14 +1,19 @@
 package com.wieb027.composeprefssample
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wieb027.composeprefs.ui.GroupHeader
 import com.wieb027.composeprefs.ui.PrefsScreen
@@ -32,7 +37,9 @@ fun SettingsScreen() {
             prefsGroup({
                 GroupHeader(
                     title = "TextPref",
-                    color = MaterialTheme.colors.secondary
+                    fontSize = MaterialTheme.typography.subtitle2.fontSize,
+                    modifier = Modifier.fillMaxWidth().padding(start = 16.dp),
+                    contentAlignment = Alignment.TopCenter,
                 )
             }) {
                 prefsItem { TextPref(title = "Just some text") }

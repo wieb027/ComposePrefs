@@ -1,8 +1,12 @@
 package com.wieb027.composeprefs.ui
 
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
@@ -64,7 +68,12 @@ internal class PrefsScopeImpl : PrefsScope {
         _headerIndexes.add(this.prefsItems.size)
 
         this.prefsItem {
-            GroupHeader(title)
+            GroupHeader(
+                title = title,
+                fontSize = MaterialTheme.typography.subtitle2.fontSize,
+                modifier = Modifier.fillMaxWidth().padding(start = 16.dp),
+                contentAlignment = Alignment.TopCenter
+            )
         }
 
         // add all children to hierarchy
