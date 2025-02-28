@@ -83,7 +83,7 @@ internal class PrefsScopeImpl : PrefsScope {
         // add all children to hierarchy
         this.apply(items)
 
-        this.prefsItem { Spacer(modifier = Modifier.height(16.dp)) }
+        this.prefsItem { Spacer(modifier = Modifier.height(4.dp)) }
 
         // add totalSize -2/-1 to footerIndexes as that is the index of the last item added and the spacer respectively
         _footerIndexes.add(this.prefsItems.size - 2)
