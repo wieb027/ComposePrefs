@@ -1,5 +1,6 @@
 package com.wieb027.composeprefs.ui
 
+import androidx.annotation.Size
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,30 +12,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun GroupHeader(
     title: String,
-    color: Color = MaterialTheme.colors.primary
+    color: Color = MaterialTheme.colors.primary,
+    fontSize: TextUnit,
+    modifier: Modifier,
+    contentAlignment: Alignment
 ) {
     Box(
-        Modifier
-            .padding(
-                start = StartPadding,
-            )
-            .fillMaxWidth(),
-        contentAlignment = Alignment.CenterStart
+        modifier = modifier,
+        contentAlignment = contentAlignment
     ) {
         Text(
-            title,
+            text = title,
             color = color,
-            fontSize = LocalTextStyle.current.fontSize.times(FontSizeMultiplier),
+            fontSize = fontSize,
             fontWeight = FontWeight.SemiBold
         )
     }
 }
-
-
-private val StartPadding = 16.dp
-private const val FontSizeMultiplier = 0.85f
