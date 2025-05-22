@@ -1,11 +1,12 @@
 package com.wieb027.composeprefs.ui
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ProvidableCompositionLocal
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -35,18 +36,27 @@ fun PrefsScreen(
     // Now the dataStore can be accessed by calling LocalPrefsDataStore.current from any child Pref
     CompositionLocalProvider(LocalPrefsDataStore provides dataStore) {
         Column {
-            Spacer(modifier = Modifier.height(12.dp))
             LazyColumn(modifier = modifier.fillMaxSize()) {
 
                 items(prefsScope.prefsItems.size) { index ->
+
+                    val paintTopDivider = dividerThickness != 0.dp
+                            && !prefsScope.headerIndexes.contains(index)
+
+                    val paintBottomDivider = dividerThickness != 0.dp
+                            && prefsScope.headerIndexes.contains(index + 1)
+                            && !prefsScope.headerIndexes.contains(index)
+
+                    if (paintTopDivider) {
+                        Divider(
+                            thickness = dividerThickness,
+                            indent = dividerIndent
+                        )
+                    }
+
                     prefsScope.getPrefsItem(index)()
 
-                    if (dividerThickness != 0.dp
-                        && index != prefsScope.prefsItems.size - 1
-                        && !prefsScope.headerIndexes.contains(index)
-                        && !prefsScope.headerIndexes.contains(index + 1)
-                        && !prefsScope.footerIndexes.contains(index)
-                    ) {
+                    if (paintBottomDivider) {
                         Divider(
                             thickness = dividerThickness,
                             indent = dividerIndent

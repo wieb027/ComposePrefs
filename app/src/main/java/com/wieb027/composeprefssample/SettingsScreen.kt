@@ -36,6 +36,112 @@ fun SettingsScreen() {
 
             prefsGroup({
                 GroupHeader(
+                    title = "Kunde",
+                    fontSize = MaterialTheme.typography.h5.fontSize,
+                    modifier = Modifier.fillMaxWidth().padding(start = 16.dp),
+                    contentAlignment = Alignment.TopCenter,
+                )
+            }) {
+                prefsItem {
+                    TextPref(
+                        title = "Zeige Dialog",
+                        summary = "But enabled this time",
+                        enabled = true
+                    )
+                }
+                prefsItem {
+                    TextPref(
+                        title = "Andere Einstellung",
+                        summary = "But with lower opacity text",
+                        darkenOnDisable = true
+                    )
+                }
+                prefsItem {
+                    TextPref(
+                        title = "Just some text",
+                        summary = "But with a leading icon",
+                        leadingIcon = { Icon(Icons.Filled.Info, "Info") })
+                }
+
+                prefsGroup({
+                    GroupHeader(
+                        title = "Wareneingang",
+                        fontSize = MaterialTheme.typography.h6.fontSize,
+                        modifier = Modifier.fillMaxWidth().padding(start = 16.dp),
+                        contentAlignment = Alignment.TopCenter
+                    )
+                }) {
+                    prefsItem { EditTextPref(key = "pt-sub-et1", title = "EditText example") }
+                    prefsItem {
+                        TextPref(
+                            title = "Just some text",
+                            summary = "But enabled this time",
+                            enabled = true
+                        )
+                    }
+                    prefsItem {
+                        TextPref(
+                            title = "Just some text",
+                            summary = "But with lower opacity text",
+                            darkenOnDisable = true
+                        )
+                    }
+                }
+
+                prefsGroup({
+                    GroupHeader(
+                        title = "Einlagerung",
+                        fontSize = MaterialTheme.typography.h6.fontSize,
+                        modifier = Modifier.fillMaxWidth().padding(start = 16.dp),
+                        contentAlignment = Alignment.TopCenter
+                    )
+                }) {
+                    prefsItem { EditTextPref(key = "pt-sub3-et1", title = "EditText example") }
+                    prefsItem {
+                        TextPref(
+                            title = "Just some text",
+                            summary = "But enabled this time",
+                            enabled = true
+                        )
+                    }
+                    prefsItem {
+                        TextPref(
+                            title = "Just some text",
+                            summary = "But with lower opacity text",
+                            darkenOnDisable = true
+                        )
+                    }
+                }
+            }
+
+            prefsGroup({
+                GroupHeader(
+                    title = "Logging",
+                    fontSize = MaterialTheme.typography.h6.fontSize,
+                    modifier = Modifier.fillMaxWidth().padding(start = 16.dp),
+                    contentAlignment = Alignment.TopCenter
+                )
+            }) {
+                prefsItem { EditTextPref(key = "pt-et2", title = "EditText example") }
+                prefsItem {
+                    TextPref(
+                        title = "Just some text",
+                        summary = "But enabled this time",
+                        enabled = true
+                    )
+                }
+                prefsItem {
+                    TextPref(
+                        title = "Just some text",
+                        summary = "But with lower opacity text",
+                        darkenOnDisable = true
+                    )
+                }
+            }
+
+
+            prefsGroup({
+                GroupHeader(
                     title = "TextPref",
                     fontSize = MaterialTheme.typography.subtitle2.fontSize,
                     modifier = Modifier.fillMaxWidth().padding(start = 16.dp),

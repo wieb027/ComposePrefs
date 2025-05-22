@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -68,8 +67,13 @@ internal class PrefsScopeImpl : PrefsScope {
         // - if current current item is header of new group
         // - if current item is end of group
 
-        // add header index so we know where each group starts
-        _headerIndexes.add(this.prefsItems.size)
+        // add header index so we know where each group starts, includes the spacers
+        _headerIndexes.addAll(this.prefsItems.size + 0 until this.prefsItems.size + 3)
+
+
+        this.prefsItem {
+            Spacer(modifier = Modifier.height(12.dp))
+        }
 
         this.prefsItem {
             GroupHeader(
@@ -80,10 +84,12 @@ internal class PrefsScopeImpl : PrefsScope {
             )
         }
 
+        this.prefsItem {
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+
         // add all children to hierarchy
         this.apply(items)
-
-        this.prefsItem { Spacer(modifier = Modifier.height(4.dp)) }
 
         // add totalSize -2/-1 to footerIndexes as that is the index of the last item added and the spacer respectively
         _footerIndexes.add(this.prefsItems.size - 2)
@@ -94,17 +100,23 @@ internal class PrefsScopeImpl : PrefsScope {
         header: @Composable PrefsScope.() -> Unit,
         items: PrefsScope.() -> Unit
     ) {
-        // add header index so we know where each group starts
-        _headerIndexes.add(this.prefsItems.size)
+        // add header index so we know where each group starts, includes the spacers
+        _headerIndexes.addAll(this.prefsItems.size + 0 until this.prefsItems.size + 3)
+
+        this.prefsItem {
+            Spacer(modifier = Modifier.height(12.dp))
+        }
 
         this.prefsItem {
             header()
         }
 
+        this.prefsItem {
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+
         // add all children to hierarchy
         this.apply(items)
-
-        this.prefsItem { Spacer(modifier = Modifier.height(16.dp)) }
 
         // add totalSize -2/-1 to footerIndexes as that is the index of the last item added and the spacer respectively
         _footerIndexes.add(this.prefsItems.size - 2)
