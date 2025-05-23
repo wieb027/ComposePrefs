@@ -42,19 +42,28 @@ fun SettingsScreen() {
                     contentAlignment = Alignment.TopCenter,
                 )
             }) {
-                prefsItem {
-                    TextPref(
-                        title = "Zeige Dialog",
-                        summary = "But enabled this time",
-                        enabled = true
+                prefsGroup({
+                    GroupHeader(
+                        title = " 2 Kunde 2 platbricks",
+                        fontSize = MaterialTheme.typography.h6.fontSize,
+                        modifier = Modifier.fillMaxWidth().padding(start = 16.dp),
+                        contentAlignment = Alignment.TopCenter,
                     )
-                }
-                prefsItem {
-                    TextPref(
-                        title = "Andere Einstellung",
-                        summary = "But with lower opacity text",
-                        darkenOnDisable = true
-                    )
+                }) {
+                    prefsItem {
+                        TextPref(
+                            title = "Zeige Dialog",
+                            summary = "But enabled this time",
+                            enabled = true
+                        )
+                    }
+                    prefsItem {
+                        TextPref(
+                            title = "Andere Einstellung",
+                            summary = "But with lower opacity text",
+                            darkenOnDisable = true
+                        )
+                    }
                 }
                 prefsItem {
                     TextPref(

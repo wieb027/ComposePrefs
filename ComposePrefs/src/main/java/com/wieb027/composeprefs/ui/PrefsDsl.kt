@@ -61,18 +61,16 @@ internal class PrefsScopeImpl : PrefsScope {
     }
 
     override fun prefsGroup(title: String, headerFontSize: TextUnit, modifier: Modifier, contentAlignment: Alignment, items: PrefsScope.() -> Unit) {
-        // Exceptions to when divider should be drawn
-        // - if last item
-        // - if next item starts a new group
-        // - if current current item is header of new group
-        // - if current item is end of group
-
         // add header index so we know where each group starts, includes the spacers
         _headerIndexes.addAll(this.prefsItems.size + 0 until this.prefsItems.size + 3)
 
 
-        this.prefsItem {
-            Spacer(modifier = Modifier.height(12.dp))
+        if (!_headerIndexes.contains(this.prefsItems.size-1)) {
+            this.prefsItem {
+                Spacer(modifier = Modifier.height(12.dp))
+            }
+        } else {
+            _headerIndexes.removeAt(_headerIndexes.lastIndex)
         }
 
         this.prefsItem {
@@ -103,8 +101,12 @@ internal class PrefsScopeImpl : PrefsScope {
         // add header index so we know where each group starts, includes the spacers
         _headerIndexes.addAll(this.prefsItems.size + 0 until this.prefsItems.size + 3)
 
-        this.prefsItem {
-            Spacer(modifier = Modifier.height(12.dp))
+        if (!_headerIndexes.contains(this.prefsItems.size-1)) {
+            this.prefsItem {
+                Spacer(modifier = Modifier.height(12.dp))
+            }
+        } else {
+            _headerIndexes.removeAt(_headerIndexes.lastIndex)
         }
 
         this.prefsItem {
