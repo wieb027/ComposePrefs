@@ -70,6 +70,8 @@ internal class PrefsScopeImpl : PrefsScope {
                 Spacer(modifier = Modifier.height(12.dp))
             }
         } else {
+            _prefsItems.removeAt(_prefsItems.lastIndex)
+            _headerIndexes.removeAt(_headerIndexes.lastIndex)
             _headerIndexes.removeAt(_headerIndexes.lastIndex)
         }
 
@@ -106,6 +108,8 @@ internal class PrefsScopeImpl : PrefsScope {
                 Spacer(modifier = Modifier.height(12.dp))
             }
         } else {
+            _prefsItems.removeAt(_prefsItems.lastIndex)
+            _headerIndexes.removeAt(_headerIndexes.lastIndex)
             _headerIndexes.removeAt(_headerIndexes.lastIndex)
         }
 
