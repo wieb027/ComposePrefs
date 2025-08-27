@@ -358,7 +358,7 @@ fun SettingsScreen() {
                     MultiSelectListPref(
                         key = "msl1",
                         title = "MultiSelectListPref",
-                        summary = "Pick multiple entries at once",
+                        infoText = "Pick multiple entries at once",
                         entries = mapOf(
                             "0" to "Entry 1",
                             "1" to "Entry 2",
@@ -374,7 +374,7 @@ fun SettingsScreen() {
                     MultiSelectListPref(
                         key = "msl2",
                         title = "MultiSelectListPref",
-                        summary = "Pick multiple entries at once from a long list",
+                        infoText = "Pick multiple entries at once from a long list",
                         entries = mapOf(
                             "0" to "Entry 1",
                             "1" to "Entry 2",
