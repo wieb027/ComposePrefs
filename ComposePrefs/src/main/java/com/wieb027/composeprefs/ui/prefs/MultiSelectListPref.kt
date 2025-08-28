@@ -17,6 +17,8 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -49,7 +51,6 @@ import kotlinx.coroutines.launch
  * @param textColor Text colour of the [title] and [infoText]
  * @param enabled If false, this Pref cannot be clicked and the Dialog cannot be shown.
  * @param entries Map of keys to values for entries that should be shown in the Dialog.
- * @param confirmButton Composable for the confirm button that receives a function to close the dialog
  */
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
@@ -64,8 +65,7 @@ fun MultiSelectListPref(
     dialogBackgroundColor: Color = MaterialTheme.colors.surface,
     textColor: Color = MaterialTheme.colors.onBackground,
     enabled: Boolean = true,
-    entries: Map<String, String> = mapOf(),
-    confirmButton: @Composable ((onDismiss: () -> Unit) -> Unit)? = null,
+    entries: Map<String, String> = mapOf()
 ) {
     val entryList = entries.toList()
     var showDialog by rememberSaveable { mutableStateOf(false) }
@@ -100,6 +100,7 @@ fun MultiSelectListPref(
     }
 
     val summary = selected.sortedBy { entry -> entryList.indexOfFirst { it.first == entry } }
+        .mapNotNull { selectedEntry -> entryList.find { it.first == selectedEntry }?.second }
         .joinToString(", ")
 
     TextPref(
@@ -150,13 +151,14 @@ fun MultiSelectListPref(
                 }
             },
             confirmButton = {
-                confirmButton?.invoke { showDialog = false } ?: run {
-                    TextButton(
-                        onClick = { showDialog = false },
-                    ) {
-                        Text(text = "Select", style = MaterialTheme.typography.button)
-                    }
-                }
+                DialogIconButton(
+                    onClick = {
+                        showDialog = false
+                    },
+                    icon = Icons.Default.Check,
+                    description = "Confirm",
+                    modifier = Modifier.padding(bottom = 8.dp, end = 4.dp)
+                )
             },
             backgroundColor = dialogBackgroundColor,
             properties = DialogProperties(
