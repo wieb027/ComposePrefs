@@ -1,8 +1,9 @@
-package com.wieb027.composeprefs.ui.prefs
+package de.arvatosystems.platbricks.ui.common.composables
 
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
@@ -14,14 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.toSize
-import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.window.Dialog
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.wieb027.composeprefs.ui.LocalPrefsDataStore
 import com.wieb027.composeprefs.ui.ifNotNullThen
+import com.wieb027.composeprefs.ui.prefs.TextPref
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -118,61 +119,86 @@ fun EditTextPref(
         LaunchedEffect(null) {
             textVal = value
         }
-        AlertDialog(
-            modifier = Modifier
-                .fillMaxWidth(0.9f)
-                .onGloballyPositioned {
-                    dialogSize = it.size.toSize()
-                },
+        Dialog(
             onDismissRequest = { showDialog = false },
-            title = null,
-            text = null,
-            buttons = {
-                Column(
-                    verticalArrangement = Arrangement.SpaceBetween,
+        ) {
+            CompositionLocalProvider(LocalElevationOverlay provides null) {
+                Surface(
+                    shape = RoundedCornerShape(16.dp),
+                    color = Color.White
                 ) {
-                    DialogHeader(dialogTitle, dialogMessage)
-
-                    OutlinedTextField(
-                        value = textVal,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                            .weight(1f, fill = false),
-                        onValueChange = {
-                            textVal = it
-                            onValueChange(it)
-                        }
-                    )
-
-                    Row(
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        modifier = Modifier.fillMaxWidth(),
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.SpaceAround
                     ) {
-                        DialogIconButton(
-                            modifier = Modifier.padding(start = 16.dp, bottom = 16.dp, end = 16.dp),
-                            onClick = { showDialog = false },
-                            icon = Icons.Rounded.Close,
-                            description = "Close",
-                        )
+                        dialogTitle?.let {
+                            Text(
+                                text = it,
+                                modifier = Modifier.padding(16.dp),
+                                style = MaterialTheme.typography.body1,
+                                textAlign = TextAlign.Start,
+                                color = Color.Black
+                            )
+                        }
 
-                        DialogIconButton(
-                            modifier = Modifier.padding(start = 16.dp, bottom = 16.dp, end = 16.dp),
-                            onClick = {
-                                edit()
-                                showDialog = false
+                        OutlinedTextField(
+                            value = textVal,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                                .weight(1f, fill = false),
+                            onValueChange = {
+                                textVal = it
+                                onValueChange(it)
                             },
-                            icon = Icons.Rounded.Check,
-                            description = "Save",
+                            colors =
+                                TextFieldDefaults.outlinedTextFieldColors(
+                                    focusedBorderColor = Color(0xFF002749),
+                                    unfocusedBorderColor = Color(0xFF424242),
+                                    textColor = Color(0xFF002749),
+                                    focusedLabelColor = Color(0xFF002749),
+                                    unfocusedLabelColor = Color(0xFF424242),
+                                    disabledTextColor = Color(0xFF002749),
+                                    disabledBorderColor = Color(0xFF424242),
+                                    disabledLabelColor = Color(0xFF424242),
+                                ),
                         )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(0.dp, 8.dp, 0.dp, 0.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            DialogIconButton(
+                                onClick = { showDialog = false },
+                                icon = Icons.Rounded.Close,
+                                description = "Cancel",
+                                modifier = Modifier.padding(
+                                    start = 8.dp,
+                                    top = 16.dp,
+                                    bottom = 16.dp,
+                                    end = 16.dp
+                                )
+                            )
+                            DialogIconButton(
+                                onClick = {
+                                    edit()
+                                    showDialog = false
+                                },
+                                icon = Icons.Rounded.Check,
+                                description = "OK",
+                                modifier = Modifier.padding(
+                                    start = 16.dp,
+                                    top = 16.dp,
+                                    bottom = 16.dp,
+                                    end = 8.dp
+                                )
+                            )
+                        }
                     }
-
                 }
-
-            },
-            properties = DialogProperties(usePlatformDefaultWidth = false),
-            backgroundColor = dialogBackgroundColor,
-        )
+            }
+        }
     }
 }
 
@@ -207,11 +233,11 @@ fun DialogIconButton(
         onClick = onClick,
         modifier = modifier,
         colors =
-        ButtonDefaults.buttonColors(
-            disabledBackgroundColor = Color(186, 186, 186),
-            backgroundColor = Color(0xFF002749),
-            contentColor = Color.White, // Text and icon color
-        ),
+            ButtonDefaults.buttonColors(
+                disabledBackgroundColor = Color(186, 186, 186),
+                backgroundColor = Color(0xFF002749),
+                contentColor = Color.White, // Text and icon color
+            ),
         contentPadding = PaddingValues(vertical = 15.dp),
     ) {
         Icon(icon, description)
