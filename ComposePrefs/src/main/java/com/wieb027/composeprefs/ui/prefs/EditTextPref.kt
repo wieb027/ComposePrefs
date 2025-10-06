@@ -1,4 +1,4 @@
-package de.arvatosystems.platbricks.ui.common.composables
+package com.wieb027.composeprefs.ui.prefs
 
 import android.util.Log
 import androidx.compose.foundation.layout.*
@@ -22,7 +22,6 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.wieb027.composeprefs.ui.LocalPrefsDataStore
 import com.wieb027.composeprefs.ui.ifNotNullThen
-import com.wieb027.composeprefs.ui.prefs.TextPref
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

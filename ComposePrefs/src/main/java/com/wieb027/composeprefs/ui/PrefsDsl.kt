@@ -1,4 +1,4 @@
-package de.arvatosystems.platbricks.ui.common.composables
+package com.wieb027.composeprefs.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
